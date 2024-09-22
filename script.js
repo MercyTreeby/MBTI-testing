@@ -262,13 +262,59 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Make sure calculateResult function is defined
 function calculateResult() {
-    // ... (implement the calculation logic here)
-    // For now, return a dummy result
+    const scores = {
+        EI: 0,
+        SN: 0,
+        TF: 0,
+        JP: 0
+    };
+
+    const questions = document.querySelectorAll('.question');
+    questions.forEach((question, index) => {
+        const category = questionPool[index].category;
+        const selectedValue = parseInt(question.querySelector('input:checked')?.value || '0');
+        
+        if (selectedValue === 0) {
+            console.warn(`No answer selected for question ${index + 1}`);
+            return;
+        }
+
+        // Adjust the score based on the category and selected value
+        switch (category) {
+            case 'EI':
+                scores.EI += selectedValue - 3;
+                break;
+            case 'SN':
+                scores.SN += selectedValue - 3;
+                break;
+            case 'TF':
+                scores.TF += 3 - selectedValue;
+                break;
+            case 'JP':
+                scores.JP += 3 - selectedValue;
+                break;
+        }
+    });
+
+    const type = [
+        scores.EI > 0 ? 'E' : 'I',
+        scores.SN > 0 ? 'S' : 'N',
+        scores.TF > 0 ? 'T' : 'F',
+        scores.JP > 0 ? 'J' : 'P'
+    ].join('');
+
+    const scoreDetails = Object.entries(scores).map(([key, value]) => {
+        const total = 20; // 10 questions per category, max score difference is 2 per question
+        const percentage = Math.round((value + total) / (2 * total) * 100);
+        const left = key[0];
+        const right = key[1];
+        return `${left} ${percentage}% - ${100 - percentage}% ${right}`;
+    }).join('\n');
+
     return {
-        type: 'INTJ',
-        scores: 'Dummy scores'
+        type,
+        scores: scoreDetails
     };
 }
 
