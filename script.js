@@ -206,6 +206,7 @@ function displayQuestions() {
     questions.forEach((q, index) => {
         const questionDiv = document.createElement('div');
         questionDiv.className = 'question';
+        questionDiv.dataset.category = q.category; // Store the category
         questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
         questionDiv.appendChild(createLikertScale(index));
         container.appendChild(questionDiv);
@@ -271,12 +272,12 @@ function calculateResult() {
     };
 
     const questions = document.querySelectorAll('.question');
-    questions.forEach((question, index) => {
-        const category = questionPool[index].category;
+    questions.forEach((question) => {
+        const category = question.dataset.category;
         const selectedValue = parseInt(question.querySelector('input:checked')?.value || '0');
         
         if (selectedValue === 0) {
-            console.warn(`No answer selected for question ${index + 1}`);
+            console.warn(`No answer selected for a question`);
             return;
         }
 
