@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claude 3.5 MBTI Personality Test</title>
+    <title>選擇語言</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Claude 3.5 MBTI Personality Test</h1>
+        <h1>Welcome to MBTI Personality Test</h1>
     </header>
     <div class="container">
-        <div id="questions-container"></div>
-        <button id="submit-btn">Submit</button>
-        <div id="result" class="result hidden"></div>
+        <h2>Please choose your language:</h2>
+        <div>
+            <button onclick="selectLanguage('en')">English</button>
+            <button onclick="selectLanguage('zh')">繁體中文</button>
+        </div>
     </div>
-    <script src="script.js"></script>
+    <script>
+        function selectLanguage(lang) {
+            // 根據選擇的語言重定向到相應的測試頁面
+            if (lang === 'zh') {
+                window.location.href = 'index_zh.html'; // 連結到繁體中文測試頁面
+            } else {
+                window.location.href = 'index_en.html'; // 連結到英文測試頁面
+            }
+        }
+    </script>
 </body>
 </html>
